@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump and Run</title>
+    <style>
+        #player {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid yellow;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        #eyes {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            width: 5px;
+            height: 5px;
+            background-color: black;
+            border-radius: 50%;
+        }
+
+        .wrestler {
+            position: absolute;
+            bottom: 0;
+            width: 80px;
+            height: 120px;
+            background-color: red;
+            border-radius: 50%;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="player">
+        <div id="eyes"></div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
