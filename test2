@@ -1,0 +1,77 @@
+const player = document.getElementById('player');
+let isJumping = false;
+let score = 0;
+
+function createPlatform() {
+    const platform = document.createElement('div');
+    platform.classList.add('platform');
+    const x = Math.random() * (window.innerWidth - 50);
+    const y = window.innerHeight - 100 - Math.random() * 200; // Höhe der Plattformen zwischen 100 und 300
+    platform.style.left = x + 'px';
+    platform.style.bottom = y + 'px';
+    document.body.appendChild(platform);
+}
+
+function createWrestler() {
+    const wrestler = document.createElement('div');
+    wrestler.classList.add('wrestler');
+    const x = Math.random() * (window.innerWidth - 80);
+    wrestler.style.left = x + 'px';
+    document.body.appendChild(wrestler);
+}
+
+function moveWrestlers() {
+    const wrestlers = document.querySelectorAll('.wrestler');
+    wrestlers.forEach(wrestler => {
+        const x = parseInt(wrestler.style.left);
+        if (x > -80) {
+            wrestler.style.left = (x - 5) + 'px';
+        } else {
+            wrestler.remove();
+            score += 10; // Score erhöhen, wenn ein Gegner verschwindet
+        }
+    });
+}
+
+function jump() {
+    if (!isJumping) {
+        isJumping = true;
+        let position = 0;
+        const jumpInterval = setInterval(() => {
+            if (position >= 150) {
+                clearInterval(jumpInterval);
+                const fallInterval = setInterval(() => {
+                    if (position === 0) {
+                        clearInterval(fallInterval);
+                        isJumping = false;
+                    }
+                    position -= 5;
+                    player.style.bottom = position + 'px';
+                }, 20);
+            }
+            position += 5;
+            player.style.bottom = position + 'px';
+        }, 20);
+    }
+}
+
+document.addEventListener('keydown', (event) => {
+    if (event.code === 'Space') {
+        jump();
+    }
+});
+
+function gameLoop() {
+    setInterval(() => {
+        createPlatform();
+        createWrestler();
+        moveWrestlers();
+        score++;
+        if (score >= 100) {
+            clearInterval(loop);
+            alert("Herzlichen Glückwunsch! Du hast das Spiel gemeistert!");
+        }
+    }, 1500);
+}
+
+const loop = gameLoop();
